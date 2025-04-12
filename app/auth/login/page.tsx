@@ -1,6 +1,4 @@
 import LoginForm from "@/components/auth/login/molecules/LoginForm";
-import { Button } from "@/components/ui/atoms/button";
-import { Input } from "@/components/ui/atoms/input";
 import { TypographyH1 } from "@/components/ui/atoms/TypographyH1";
 import { TypographyH3 } from "@/components/ui/atoms/TypographyH3";
 import Link from "next/link";
@@ -14,7 +12,7 @@ export default function LoginPage() {
       <p className="mt-8 text-center text-sm/6 text-gray-500">
         ¿Olvidaste tu contraseña?{" "}
         <Link
-          href="/auth/forgot-password"
+          href="/auth/recovery-password"
           className="font-semibold text-primary hover:text-primary/80"
         >
           recuperar contraseña
