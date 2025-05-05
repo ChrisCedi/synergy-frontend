@@ -1,0 +1,67 @@
+"use client";
+import { Calendar, Home, Inbox, Search, Settings, User } from "lucide-react";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+} from "@/components/ui/molecules/sidebar";
+import { TypographyH3 } from "../atoms/TypographyH3";
+import { usePathname } from "next/navigation";
+import Link from "next/link";
+
+const items = [
+  {
+    title: "General",
+    url: "/general",
+    icon: Home,
+  },
+  {
+    title: "Usuarios",
+    url: "/users",
+    icon: User,
+  },
+];
+
+export function SideBar() {
+  const pathname = usePathname();
+  return (
+    <Sidebar className="p-4">
+      <SidebarHeader className="bg-white">
+        <TypographyH3>Synergy</TypographyH3>
+        <p>Bienvenido, usuario</p>
+      </SidebarHeader>
+      <SidebarContent className="bg-white">
+        <SidebarGroup>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {items.map((item) => (
+                <SidebarMenuItem
+                  key={item.title}
+                  className={`${
+                    pathname == item.url ? "border-primary border-2 " : null
+                  } rounded-md`}
+                >
+                  <SidebarMenuButton asChild>
+                    <Link href={item.url}>
+                      <item.icon />
+                      <span
+                        className={`${pathname == item.url && "font-bold"}`}
+                      >
+                        {item.title}
+                      </span>
+                    </Link>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+    </Sidebar>
+  );
+}

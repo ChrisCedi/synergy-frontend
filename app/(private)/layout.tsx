@@ -1,6 +1,7 @@
 import ToastNotification from "@/components/ui/atoms/ToastNotification";
-import Footer from "@/components/ui/molecules/Footer";
 import Header from "@/components/ui/molecules/Header";
+import { SidebarProvider } from "@/components/ui/molecules/sidebar";
+import { SideBar } from "@/components/ui/organisms/SideBar";
 
 export default function PrivateLayout({
   children,
@@ -8,12 +9,15 @@ export default function PrivateLayout({
   children: React.ReactNode;
 }) {
   return (
-    <section className="min-h-screen flex flex-col">
-      <Header />
-      <main className="flex-1 flex items-center justify-center">
-        {children}
-        <ToastNotification />
-      </main>
-    </section>
+    <SidebarProvider>
+      <SideBar />
+      <section className="min-h-screen flex flex-col w-full">
+        <main>
+          <Header />
+          <div className="px-4 md:px-8 lg:px-14 h-16">{children}</div>
+          <ToastNotification />
+        </main>
+      </section>
+    </SidebarProvider>
   );
 }
