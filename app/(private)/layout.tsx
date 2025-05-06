@@ -1,6 +1,6 @@
 import ToastNotification from "@/components/ui/atoms/ToastNotification";
 import Header from "@/components/ui/molecules/Header";
-import { SidebarProvider } from "@/components/ui/molecules/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { SideBar } from "@/components/ui/organisms/SideBar";
 
 export default function PrivateLayout({

@@ -1,6 +1,6 @@
 import React from "react";
-import { Avatar, AvatarFallback } from "@/components/ui/atoms/avatar";
-import { Button } from "@/components/ui/atoms/button";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,7 +8,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/atoms/dropdown-menu";
+} from "@/components/ui/dropdown-menu";
 import { User, Settings } from "lucide-react";
 
 const UserAvatar: React.FC = () => {

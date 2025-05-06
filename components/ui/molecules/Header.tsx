@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import UserAvatar from "@/components/ui/atoms/UserAvatar";
-import { SidebarTrigger } from "./sidebar";
+import { SidebarTrigger } from "../sidebar";
 
 const Header: React.FC = () => {
   return (

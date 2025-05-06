@@ -1,5 +1,5 @@
 "use client";
-import { Calendar, Home, Inbox, Search, Settings, User } from "lucide-react";
+import { Home, User } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -9,10 +9,11 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/molecules/sidebar";
+} from "@/components/ui/sidebar";
 import { TypographyH3 } from "../atoms/TypographyH3";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
 
 const items = [
   {
@@ -32,7 +33,15 @@ export function SideBar() {
   return (
     <Sidebar className="p-4">
       <SidebarHeader className="bg-white">
-        <TypographyH3>Synergy</TypographyH3>
+        <div className="flex">
+          <Image
+            src="/synergy-logo.svg"
+            height={35}
+            width={35}
+            alt="synergy logo"
+          />
+          <TypographyH3 className="pl-2">Synergy</TypographyH3>
+        </div>
         <p>Bienvenido, usuario</p>
       </SidebarHeader>
       <SidebarContent className="bg-white">
