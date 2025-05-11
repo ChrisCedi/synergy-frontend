@@ -17,8 +17,8 @@ import Image from "next/image";
 
 const items = [
   {
-    title: "General",
-    url: "/general",
+    title: "dashboard",
+    url: "/dashboard",
     icon: Home,
   },
   {
