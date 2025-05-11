@@ -1,7 +1,7 @@
 "use client";
 import { useActionState, useEffect } from "react";
-import { Input } from "@/components/ui/atoms/input";
-import { Button } from "@/components/ui/atoms/button";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { loginAction } from "@/actions/auth/login-action";
 import { toast } from "react-toastify";
 
