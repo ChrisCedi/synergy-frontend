@@ -14,23 +14,31 @@ import {
 
 export type Payment = {
   id: string;
-  amount: number;
-  status: "pending" | "processing" | "success" | "failed";
-  email: string;
+  company: string;
+  createdAt: string;
+  employee: string;
 };
 
 export const dashboardColumns: ColumnDef<Payment>[] = [
   {
-    accessorKey: "status",
-    header: "Status",
+    accessorKey: "company",
+    header: "Empresa",
   },
   {
-    accessorKey: "email",
-    header: "Email",
+    accessorKey: "employee",
+    header: "Emplaeado",
   },
   {
-    accessorKey: "amount",
-    header: "Amount",
+    accessorKey: "createdAt",
+    header: "Fecha de registro",
+    cell: ({ row }) => {
+      const date = new Date(row.original.createdAt);
+      return date.toLocaleDateString("es-ES", {
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      });
+    },
   },
   {
     id: "actions",
@@ -46,15 +54,15 @@ export const dashboardColumns: ColumnDef<Payment>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+            <DropdownMenuLabel>Acciones</DropdownMenuLabel>
             <DropdownMenuItem
               onClick={() => navigator.clipboard.writeText(payment.id)}
             >
-              Copy payment ID
+              Ver balance
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>View customer</DropdownMenuItem>
-            <DropdownMenuItem>View payment details</DropdownMenuItem>
+            <DropdownMenuItem>Editar</DropdownMenuItem>
+            <DropdownMenuItem>Eliminar</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
