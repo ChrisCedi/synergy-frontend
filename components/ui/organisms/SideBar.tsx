@@ -17,8 +17,8 @@ import Image from "next/image";
 
 const items = [
   {
-    title: "dashboard",
-    url: "/dashboard",
+    title: "Balances",
+    url: "/balances",
     icon: Home,
   },
   {
@@ -52,7 +52,9 @@ export function SideBar() {
                 <SidebarMenuItem
                   key={item.title}
                   className={`${
-                    pathname == item.url ? "border-primary border-2 " : null
+                    pathname.startsWith(item.url)
+                      ? "border-primary border-2 "
+                      : null
                   } rounded-md`}
                 >
                   <SidebarMenuButton asChild>

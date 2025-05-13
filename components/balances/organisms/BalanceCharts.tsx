@@ -11,12 +11,12 @@ import {
 import { TypographyH4 } from "@/components/ui/atoms/TypographyH4";
 
 const chartData = [
-  { company: "Coca cola", desktop: 186 },
-  { company: "Pepsi", desktop: 305 },
-  { company: "Barcel", desktop: 237 },
-  { company: "Bimbo", desktop: 73 },
-  { company: "Sabritas", desktop: 209 },
-  { company: "Jumex", desktop: 21 },
+  { company: "Coca cola", balances: 186 },
+  { company: "Pepsi", balances: 305 },
+  { company: "Barcel", balances: 237 },
+  { company: "Bimbo", balances: 73 },
+  { company: "Sabritas", balances: 209 },
+  { company: "Jumex", balances: 21 },
 ];
 
 const chartConfig = {
@@ -33,7 +33,7 @@ const chartConfig = {
 export function BalanceCharts() {
   return (
     <div>
-      <TypographyH4 className="py-4">Origen de registros</TypographyH4>
+      <TypographyH4 className="py-4">Top de registros por empresa</TypographyH4>
       <ChartContainer
         config={chartConfig}
         className="h-[200px] md:h-[240px] w-full mb-4"
@@ -48,7 +48,7 @@ export function BalanceCharts() {
             tickFormatter={(value) => value.slice(0, 6)}
           />
           <ChartTooltip content={<ChartTooltipContent />} />
-          <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
+          <Bar dataKey="balances" fill="var(--color-desktop)" radius={4} />
         </BarChart>
       </ChartContainer>
     </div>

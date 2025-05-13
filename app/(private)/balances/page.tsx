@@ -2,18 +2,17 @@ import { DataTable } from "@/components/ui/organisms/DataTable";
 import {
   dashboardColumns,
   Payment,
-} from "@/components/dashboard/organisms/dashboardColumns";
-import { TypographyH1 } from "@/components/ui/atoms/TypographyH1";
+} from "@/components/balances/organisms/dashboardColumns";
 import Title from "@/components/ui/atoms/Title";
-import CreateBalanceButton from "@/components/dashboard/atoms/CreateBalanceButton";
-import { BalanceCharts } from "@/components/dashboard/organisms/BalanceCharts";
+import CreateBalanceButton from "@/components/balances/atoms/CreateBalanceButton";
+import { BalanceCharts } from "@/components/balances/organisms/BalanceCharts";
 
 export const metadata = {
   title: "Dashboard | Synergy",
   description: "General page",
 };
 
-export default function dashboardPage() {
+export default function BalancesPage() {
   const data: Payment[] = [
     {
       id: "728ed52f",
@@ -37,7 +36,7 @@ export default function dashboardPage() {
 
   return (
     <div>
-      <Title title="Dashboard" />
+      <Title title="Balances" />
       <CreateBalanceButton />
       <BalanceCharts />
 
