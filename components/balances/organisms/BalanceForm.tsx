@@ -22,7 +22,7 @@ export default function BalanceForm() {
     control,
     register,
     watch,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm<BalanceFormValues>();
 
   const { fields, append, remove } = useFieldArray({
@@ -37,6 +37,16 @@ export default function BalanceForm() {
     }
     console.log("Form Data:", data);
   };
+
+  const capitalValue = !isNaN(Number(watch("capital"))) ? watch("capital") : 0;
+  const acquisitionsValue = watch("acquisitions") || [];
+
+  const totalAcquisitions = acquisitionsValue.reduce(
+    (total, acquisition) => total + (Number(acquisition.cost) || 0),
+    0
+  );
+
+  const balance = Number(capitalValue) - totalAcquisitions;
 
   return (
     <Card>
@@ -103,9 +113,43 @@ export default function BalanceForm() {
             </Button>
           </div>
 
-          <Separator className="my-4" />
+          <Separator className="my-8" />
+
+          <div className="bg-gray-100 p-6 rounded-2xl mb-6">
+            <h2 className="pb-3 text-2xl font-bold">Resumen</h2>
+            {isValid && acquisitionsValue.length > 0 ? (
+              <div>
+                <p>
+                  Capital:{" "}
+                  {new Intl.NumberFormat("es-MX", {
+                    style: "currency",
+                    currency: "MXN",
+                  }).format(capitalValue)}
+                </p>
+                <p>
+                  Total de adquisiciones:{" "}
+                  {new Intl.NumberFormat("es-MX", {
+                    style: "currency",
+                    currency: "MXN",
+                  }).format(totalAcquisitions)}
+                </p>
+                <p>
+                  Balance:{" "}
+                  {new Intl.NumberFormat("es-MX", {
+                    style: "currency",
+                    currency: "MXN",
+                  }).format(balance)}
+                </p>
+              </div>
+            ) : (
+              <p>
+                Para visualizar el resumen de tu balance es importante llenar
+                los campos obligatorios y revisar que no existan errores.
+              </p>
+            )}
+          </div>
           <div>
-            <Button className="w-full mt-6" type="submit">
+            <Button className="w-full mt-1" type="submit">
               <Save />
               Guardar Balance
             </Button>
