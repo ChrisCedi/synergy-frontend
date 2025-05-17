@@ -31,7 +31,6 @@ export default function BalanceForm() {
   });
 
   const onSubmit = (data: BalanceFormValues) => {
-    console.log("anted e valid:", data);
     if (data.acquisitions.length === 0) {
       toast.warning("Debe agregar al menos una adquisición");
       return;
@@ -94,7 +93,7 @@ export default function BalanceForm() {
                   description: "",
                   cost: 0,
                   paymentMethod: "contado",
-                  initialPayment: 1,
+                  initialPayment: 0,
                   remainingAmount: "3",
                 })
               }

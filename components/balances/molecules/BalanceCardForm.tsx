@@ -50,7 +50,17 @@ export default function BalanceCardForm({
   watch,
 }: BalanceCardFormProps) {
   let paymentMethodValue = watch(`acquisitions.${index}.paymentMethod`);
-  let costValue = watch(`acquisitions.${index}.cost`);
+  let costValue = !isNaN(Number(watch(`acquisitions.${index}.cost`)))
+    ? watch(`acquisitions.${index}.cost`)
+    : 0;
+  let initialPaymentValue = !isNaN(
+    Number(watch(`acquisitions.${index}.initialPayment`))
+  )
+    ? watch(`acquisitions.${index}.initialPayment`)
+    : 0;
+  let remainingAmountValue = Number(
+    watch(`acquisitions.${index}.remainingAmount`)
+  );
 
   return (
     <Card className="mb-4">
@@ -72,7 +82,7 @@ export default function BalanceCardForm({
               placeholder="Ingrese el nombre de adquisición"
             />
             {errors.acquisitions?.[index]?.name && (
-              <p className="text-red-500 text-xs">
+              <p className="text-red-500 text-xs pt-1">
                 {errors.acquisitions[index].name.message}
               </p>
             )}
@@ -96,7 +106,7 @@ export default function BalanceCardForm({
               })}
             />
             {errors.acquisitions?.[index]?.cost && (
-              <p className="text-red-500 text-xs">
+              <p className="text-red-500 text-xs pt-1">
                 {errors.acquisitions[index].cost.message}
               </p>
             )}
@@ -130,7 +140,15 @@ export default function BalanceCardForm({
         <div>
           {paymentMethodValue === "contado" ? (
             <div className="bg-gray-100 p-6 rounded-2xl">
-              <p className="font-extrabold">Total a pagar: {costValue}</p>
+              <p className="font-extrabold">
+                Total a pagar:{" "}
+                {isNaN(costValue)
+                  ? 0
+                  : new Intl.NumberFormat("es-MX", {
+                      style: "currency",
+                      currency: "MXN",
+                    }).format(costValue)}{" "}
+              </p>
             </div>
           ) : (
             <div>
@@ -138,7 +156,6 @@ export default function BalanceCardForm({
                 <div>
                   <Label htmlFor="companyName">Pago incial</Label>
                   <Input
-                    type="number"
                     placeholder="0"
                     {...register(`acquisitions.${index}.initialPayment`, {
                       required:
@@ -147,10 +164,17 @@ export default function BalanceCardForm({
                           : false,
                       valueAsNumber: true,
                       min: { value: 1, message: "Debe ser mayor a 0" },
+                      validate: (value: number | undefined) => {
+                        if (value === undefined) return "Campo requerido";
+                        if (value > costValue) {
+                          return "El pago inicial no puede ser mayor al costo total";
+                        }
+                        return true;
+                      },
                     })}
                   />
                   {errors.acquisitions?.[index]?.initialPayment && (
-                    <p className="text-red-500 text-xs">
+                    <p className="text-red-500 text-xs pt-1">
                       {errors.acquisitions[index].initialPayment.message}
                     </p>
                   )}
@@ -182,19 +206,40 @@ export default function BalanceCardForm({
                     )}
                   />
                   {errors.acquisitions?.[index]?.remainingAmount && (
-                    <p className="text-red-500 text-xs">
+                    <p className="text-red-500 text-xs pt-1">
                       {errors.acquisitions[index].remainingAmount.message}
                     </p>
                   )}
                 </div>
               </div>
               <div className="bg-gray-100 p-6 rounded-2xl">
-                <p className="font-extrabold pb-2">
-                  Monto restante {costValue}
-                </p>
-                <p className="font-extrabold">
-                  Pago menusal estimado: {costValue}
-                </p>
+                {initialPaymentValue !== undefined &&
+                initialPaymentValue > 0 &&
+                costValue > 0 ? (
+                  <div>
+                    <p className="font-extrabold pb-2">
+                      Monto restante:{" "}
+                      {new Intl.NumberFormat("es-MX", {
+                        style: "currency",
+                        currency: "MXN",
+                      }).format(costValue - initialPaymentValue)}
+                    </p>
+                    <p className="font-extrabold">
+                      Pago menusal estimado:
+                      {new Intl.NumberFormat("es-MX", {
+                        style: "currency",
+                        currency: "MXN",
+                      }).format(
+                        (costValue - initialPaymentValue) / remainingAmountValue
+                      )}
+                    </p>
+                  </div>
+                ) : (
+                  <p>
+                    Para mostrar un desglose es necesario ingresar el costo y el
+                    pago inicial ⚠️
+                  </p>
+                )}
               </div>
             </div>
           )}
