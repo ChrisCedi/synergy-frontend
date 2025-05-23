@@ -7,7 +7,6 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import {
   Control,
   FieldErrors,
-  UseControllerProps,
   UseFormRegister,
   UseFormWatch,
   Controller,
@@ -19,9 +18,9 @@ import {
   SelectTrigger,
   SelectValue,
   SelectContent,
-  SelectLabel,
 } from "@/components/ui/select";
 import { BalanceFormValues } from "../organisms/BalanceForm";
+import { formatCurrency } from "@/utils/formatCurrency";
 
 type BalanceCardFormProps = {
   control: Control<BalanceFormValues>;
@@ -37,8 +36,8 @@ export type BalanceCardFormValues = {
   description: string;
   cost: number;
   paymentMethod: "contado" | "financiado";
-  initialPayment?: number;
-  remainingAmount?: string;
+  initialPayment: number;
+  remainingAmount: string;
 };
 
 export default function BalanceCardForm({
@@ -49,6 +48,7 @@ export default function BalanceCardForm({
   errors,
   watch,
 }: BalanceCardFormProps) {
+  let capitalValue = Number(watch("capital"));
   let paymentMethodValue = watch(`acquisitions.${index}.paymentMethod`);
   let costValue = !isNaN(Number(watch(`acquisitions.${index}.cost`)))
     ? watch(`acquisitions.${index}.cost`)
@@ -61,6 +61,22 @@ export default function BalanceCardForm({
   let remainingAmountValue = Number(
     watch(`acquisitions.${index}.remainingAmount`)
   );
+
+  let acquisitionValue = watch(`acquisitions`);
+
+  let totalAcquisitions = acquisitionValue
+    .slice(0, index + 1)
+    .reduce((total: number, acquisition: BalanceCardFormValues) => {
+      return total + (Number(acquisition.cost) || 0);
+    }, 0);
+
+  let shortTerm = (costValue - initialPaymentValue) / remainingAmountValue;
+  let longTerm = costValue - initialPaymentValue - shortTerm;
+
+  const handleSetMonths = (years: number) => {
+    const months = years * 12;
+    return months;
+  };
 
   return (
     <Card className="mb-4">
@@ -139,16 +155,24 @@ export default function BalanceCardForm({
         </div>
         <div>
           {paymentMethodValue === "contado" ? (
-            <div className="bg-gray-100 p-6 rounded-2xl">
-              <p className="font-extrabold">
-                Total a pagar:{" "}
-                {isNaN(costValue)
-                  ? 0
-                  : new Intl.NumberFormat("es-MX", {
-                      style: "currency",
-                      currency: "MXN",
-                    }).format(costValue)}{" "}
-              </p>
+            <div className="bg-gray-100 p-6 rounded-2xl grid grid-cols-1 md:grid-cols-2 gap-4">
+              {capitalValue > 0 && costValue > 0 ? (
+                <div>
+                  <p className="font-extrabold pb-3">
+                    Total a pagar:{" "}
+                    {isNaN(costValue) ? 0 : formatCurrency(costValue)}{" "}
+                  </p>
+                  <p className="font-extrabold pb-3">
+                    Disponible:
+                    {formatCurrency(capitalValue - totalAcquisitions)}
+                  </p>
+                </div>
+              ) : (
+                <p>
+                  Para mostrar un desglose es necesario ingresar los valores
+                  solicitados ⚠️
+                </p>
+              )}
             </div>
           ) : (
             <div>
@@ -195,11 +219,11 @@ export default function BalanceCardForm({
                         </SelectTrigger>
                         <SelectContent>
                           <SelectGroup>
-                            <SelectItem value="3">3 meses</SelectItem>
-                            <SelectItem value="6">6 meses</SelectItem>
-                            <SelectItem value="12">12 meses</SelectItem>
-                            <SelectItem value="24">24 meses</SelectItem>
-                            <SelectItem value="36">36 meses</SelectItem>
+                            <SelectItem value="1">12 meses</SelectItem>
+                            <SelectItem value="2">24 meses</SelectItem>
+                            <SelectItem value="3">36 meses</SelectItem>
+                            <SelectItem value="4">48 meses</SelectItem>
+                            <SelectItem value="5">60 meses</SelectItem>
                           </SelectGroup>
                         </SelectContent>
                       </Select>
@@ -215,24 +239,38 @@ export default function BalanceCardForm({
               <div className="bg-gray-100 p-6 rounded-2xl">
                 {initialPaymentValue !== undefined &&
                 initialPaymentValue > 0 &&
-                costValue > 0 ? (
-                  <div>
-                    <p className="font-extrabold pb-2">
-                      Monto restante:{" "}
-                      {new Intl.NumberFormat("es-MX", {
-                        style: "currency",
-                        currency: "MXN",
-                      }).format(costValue - initialPaymentValue)}
-                    </p>
-                    <p className="font-extrabold">
-                      Pago menusal estimado:
-                      {new Intl.NumberFormat("es-MX", {
-                        style: "currency",
-                        currency: "MXN",
-                      }).format(
-                        (costValue - initialPaymentValue) / remainingAmountValue
+                costValue > 0 &&
+                capitalValue > 0 ? (
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                      <p className="font-extrabold pb-3">
+                        Monto restante:{" "}
+                        {formatCurrency(costValue - initialPaymentValue)}
+                      </p>
+                      <p className="font-extrabold pb-3">
+                        Pago menusal estimado:
+                        {formatCurrency(
+                          (costValue - initialPaymentValue) /
+                            handleSetMonths(remainingAmountValue)
+                        )}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="font-extrabold pb-3">
+                        Deuda a corto plazo: {formatCurrency(shortTerm)}
+                      </p>
+                      {remainingAmountValue > 1 && (
+                        <p className="font-extrabold pb-3">
+                          Deuda a largo plazo: {formatCurrency(longTerm)}
+                        </p>
                       )}
-                    </p>
+                    </div>
+                    <div>
+                      <p className="font-extrabold pb-3">
+                        Disponible:{" "}
+                        {formatCurrency(capitalValue - totalAcquisitions)}
+                      </p>
+                    </div>
                   </div>
                 ) : (
                   <p>

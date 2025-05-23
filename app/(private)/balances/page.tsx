@@ -6,6 +6,7 @@ import {
 import Title from "@/components/ui/atoms/Title";
 import CreateBalanceButton from "@/components/balances/atoms/CreateBalanceButton";
 import { BalanceCharts } from "@/components/balances/organisms/BalanceCharts";
+import { TypographyH4 } from "@/components/ui/atoms/TypographyH4";
 
 export const metadata = {
   title: "Dashboard | Synergy",
@@ -39,7 +40,7 @@ export default function BalancesPage() {
       <Title title="Balances" />
       <CreateBalanceButton />
       <BalanceCharts />
-
+      <TypographyH4 className="py-4">Mis registros</TypographyH4>
       <DataTable
         columns={dashboardColumns}
         data={data}

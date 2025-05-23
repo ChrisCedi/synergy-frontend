@@ -9,6 +9,7 @@ import BalanceCardForm from "../molecules/BalanceCardForm";
 import { Separator } from "@/components/ui/separator";
 import { toast } from "react-toastify";
 import { BalanceCardFormValues } from "../molecules/BalanceCardForm";
+import { formatCurrency } from "@/utils/formatCurrency";
 
 export type BalanceFormValues = {
   companyName: string;
@@ -72,7 +73,7 @@ export default function BalanceForm() {
                 placeholder="0"
                 {...register("capital", {
                   required: "El capital es obligatorio",
-                  valueAsNumber: true,
+
                   min: { value: 1, message: "Debe ser mayor a 0" },
                 })}
               />
@@ -104,7 +105,7 @@ export default function BalanceForm() {
                   cost: 0,
                   paymentMethod: "contado",
                   initialPayment: 0,
-                  remainingAmount: "3",
+                  remainingAmount: "1",
                 })
               }
             >
@@ -119,27 +120,11 @@ export default function BalanceForm() {
             <h2 className="pb-3 text-2xl font-bold">Resumen</h2>
             {isValid && acquisitionsValue.length > 0 ? (
               <div>
+                <p>Capital: {formatCurrency(capitalValue)}</p>
                 <p>
-                  Capital:{" "}
-                  {new Intl.NumberFormat("es-MX", {
-                    style: "currency",
-                    currency: "MXN",
-                  }).format(capitalValue)}
+                  Total de adquisiciones: {formatCurrency(totalAcquisitions)}
                 </p>
-                <p>
-                  Total de adquisiciones:{" "}
-                  {new Intl.NumberFormat("es-MX", {
-                    style: "currency",
-                    currency: "MXN",
-                  }).format(totalAcquisitions)}
-                </p>
-                <p>
-                  Balance:{" "}
-                  {new Intl.NumberFormat("es-MX", {
-                    style: "currency",
-                    currency: "MXN",
-                  }).format(balance)}
-                </p>
+                <p>Balance: {formatCurrency(balance)}</p>
               </div>
             ) : (
               <p>

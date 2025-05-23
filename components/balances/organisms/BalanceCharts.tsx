@@ -1,6 +1,6 @@
 "use client";
 
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import { Bar, BarChart, CartesianGrid, XAxis, YAxis } from "recharts";
 
 import {
   ChartConfig,
@@ -11,12 +11,12 @@ import {
 import { TypographyH4 } from "@/components/ui/atoms/TypographyH4";
 
 const chartData = [
-  { company: "Coca cola", balances: 186 },
-  { company: "Pepsi", balances: 305 },
-  { company: "Barcel", balances: 237 },
-  { company: "Bimbo", balances: 73 },
-  { company: "Sabritas", balances: 209 },
-  { company: "Jumex", balances: 21 },
+  { company: "Coca cola", adquisiciones: 186 },
+  { company: "Pepsi", adquisiciones: 305 },
+  { company: "Barcel", adquisiciones: 237 },
+  { company: "Bimbo", adquisiciones: 73 },
+  { company: "Sabritas", adquisiciones: 209 },
+  { company: "Jumex", adquisiciones: 21 },
 ];
 
 const chartConfig = {
@@ -33,7 +33,9 @@ const chartConfig = {
 export function BalanceCharts() {
   return (
     <div>
-      <TypographyH4 className="py-4">Top de registros por empresa</TypographyH4>
+      <TypographyH4 className="py-4">
+        Top de adquisiciones por empresa
+      </TypographyH4>
       <ChartContainer
         config={chartConfig}
         className="h-[200px] md:h-[240px] w-full mb-4"
@@ -47,8 +49,9 @@ export function BalanceCharts() {
             axisLine={true}
             tickFormatter={(value) => value.slice(0, 6)}
           />
+          <YAxis />
           <ChartTooltip content={<ChartTooltipContent />} />
-          <Bar dataKey="balances" fill="var(--color-desktop)" radius={4} />
+          <Bar dataKey="adquisiciones" fill="var(--color-desktop)" radius={4} />
         </BarChart>
       </ChartContainer>
     </div>
