@@ -1,5 +1,5 @@
 "use client";
-import { Home, User } from "lucide-react";
+import { Home, User, FactoryIcon } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -22,9 +22,9 @@ const items = [
     icon: Home,
   },
   {
-    title: "Clientes",
-    url: "/customers",
-    icon: User,
+    title: "Empresas",
+    url: "/companies",
+    icon: FactoryIcon,
   },
 ];
 

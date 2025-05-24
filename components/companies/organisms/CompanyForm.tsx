@@ -7,13 +7,13 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { toast } from "react-toastify";
 
-interface CustomerForm {
+interface CompanyForm {
   companyName: string;
   rfc: string;
   email: string;
 }
 
-export function CustomerForm({
+export function CompanyForm({
   initialValues = {
     companyName: "",
     rfc: "",
@@ -25,11 +25,11 @@ export function CustomerForm({
     formState: { errors },
     handleSubmit,
     register,
-  } = useForm<CustomerForm>({
+  } = useForm<CompanyForm>({
     defaultValues: initialValues,
   });
 
-  const onSubmit = (data: CustomerForm) => {
+  const onSubmit = (data: CompanyForm) => {
     console.log(data);
     toast.success("Cliente guardado correctamente");
     router.back();
