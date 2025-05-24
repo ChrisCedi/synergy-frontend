@@ -44,7 +44,12 @@ export function CompanyCard({ id, name, rfc, email }: CompanyCardProps) {
         >
           Registrar usuario
         </Button>
-        <Button className="w-full" variant="outline" color="primary">
+        <Button
+          className="w-full"
+          variant="outline"
+          color="primary"
+          onClick={() => router.push(`/companies/users/${id}`)}
+        >
           Ver usuarios registrados
         </Button>
       </CardFooter>
