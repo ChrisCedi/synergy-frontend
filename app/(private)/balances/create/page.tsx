@@ -1,6 +1,6 @@
 import BalanceForm from "@/components/balances/organisms/BalanceForm";
 import ButtonBack from "@/components/ui/atoms/ButtonBack";
-import Title from "@/components/ui/atoms/Title";
+import { Title } from "@/components/ui/atoms/Title";
 
 export const metadata = {
   title: "Nuevo Balance | Synergy",

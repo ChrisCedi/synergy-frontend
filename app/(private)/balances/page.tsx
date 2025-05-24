@@ -3,13 +3,13 @@ import {
   dashboardColumns,
   Payment,
 } from "@/components/balances/organisms/dashboardColumns";
-import Title from "@/components/ui/atoms/Title";
+import { Title } from "@/components/ui/atoms/Title";
 import CreateBalanceButton from "@/components/balances/atoms/CreateBalanceButton";
 import { BalanceCharts } from "@/components/balances/organisms/BalanceCharts";
 import { TypographyH4 } from "@/components/ui/atoms/TypographyH4";
 
 export const metadata = {
-  title: "Dashboard | Synergy",
+  title: "Balances | Synergy",
   description: "General page",
 };
 
