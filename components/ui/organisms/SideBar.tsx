@@ -22,8 +22,8 @@ const items = [
     icon: Home,
   },
   {
-    title: "Usuarios",
-    url: "/users",
+    title: "Clientes",
+    url: "/customers",
     icon: User,
   },
 ];

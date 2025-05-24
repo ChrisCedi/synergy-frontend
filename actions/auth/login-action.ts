@@ -1,4 +1,5 @@
 "use server";
+import { redirect } from "next/navigation";
 import { z } from "zod";
 
 export const loginAction = async (
@@ -33,8 +34,6 @@ export const loginAction = async (
       },
     };
   }
-
-  console.log(email, password);
 
   return {
     success: "Login exitoso",
