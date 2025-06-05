@@ -15,7 +15,7 @@ export default function CreateBalancePage() {
       <ButtonBack />
       <p className="pb-4 text-gray-500">
         Ingrese los datos de la empresa y las adquisisciones para generar un
-        balance financiero.
+        registro financiero.
       </p>
       <BalanceForm />
     </div>

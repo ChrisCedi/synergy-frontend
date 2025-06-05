@@ -31,7 +31,7 @@ const items = [
 export function SideBar() {
   const pathname = usePathname();
   return (
-    <Sidebar className="p-4">
+    <Sidebar className="p-4 bg-white">
       <SidebarHeader className="bg-white">
         <div className="flex">
           <Image
