@@ -11,7 +11,7 @@ export default async function AcquisitionsPage({
 }: {
   params: { id: number };
 }) {
-  const { id } = await params;
+  const { id } = params;
 
   const companyData = {
     name: "Coca",
