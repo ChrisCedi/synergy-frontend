@@ -2,10 +2,13 @@ import React from "react";
 import { Title } from "@/components/ui/atoms/Title";
 import { UserForm } from "@/components/companies/organisms/UserForm";
 import { ButtonBack } from "@/components/ui/atoms/ButtonBack";
+
+type paramsCompany = Promise<{ company_name: string }>;
+
 export default async function CreateUserPage({
   params,
 }: {
-  params: { company_name: string };
+  params: paramsCompany;
 }) {
   const { company_name } = await params;
   const nameFormatted = company_name.split("%20").join(" ");

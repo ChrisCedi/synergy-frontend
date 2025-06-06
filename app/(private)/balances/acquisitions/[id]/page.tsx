@@ -5,13 +5,14 @@ import { AddAcquisition } from "@/components/balances/organisms/AddAcquisition";
 import { ButtonBack } from "@/components/ui/atoms/ButtonBack";
 import { AcquisitionCard } from "@/components/balances/molecules/AcquisitionCard";
 import { Separator } from "@/components/ui/separator";
+import { paramsType } from "@/types/Params";
 
 export default async function AcquisitionsPage({
   params,
 }: {
-  params: { id: number };
+  params: paramsType;
 }) {
-  const { id } = params;
+  const { id } = await params;
 
   const companyData = {
     name: "Coca",

@@ -1,11 +1,12 @@
 import { Title } from "@/components/ui/atoms/Title";
 import { BalanceForm } from "@/components/balances/organisms/BalanceForm";
 import { ButtonBack } from "@/components/ui/atoms/ButtonBack";
+import { paramsType } from "@/types/Params";
 
 export default async function EditBalancePage({
   params,
 }: {
-  params: { id: string };
+  params: paramsType;
 }) {
   const { id } = await params;
 
