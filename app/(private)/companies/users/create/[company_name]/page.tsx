@@ -1,7 +1,7 @@
 import React from "react";
 import { Title } from "@/components/ui/atoms/Title";
 import { UserForm } from "@/components/companies/organisms/UserForm";
-import ButtonBack from "@/components/ui/atoms/ButtonBack";
+import { ButtonBack } from "@/components/ui/atoms/ButtonBack";
 export default async function CreateUserPage({
   params,
 }: {

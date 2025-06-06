@@ -2,6 +2,7 @@ import { Title } from "@/components/ui/atoms/Title";
 import { Card, CardContent } from "@/components/ui/card";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { AddAcquisition } from "@/components/balances/organisms/AddAcquisition";
+import { ButtonBack } from "@/components/ui/atoms/ButtonBack";
 
 export default async function AcquisitionsPage({
   params,
@@ -19,6 +20,7 @@ export default async function AcquisitionsPage({
   return (
     <div>
       <Title title="Adquisiciones - empresa" />
+      <ButtonBack />
       <p className="text-2xl">
         Nombre del registro: <strong>Coca</strong>
       </p>

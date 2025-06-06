@@ -14,7 +14,7 @@ export type BalanceFormValues = {
   capital: number;
 };
 
-export default function BalanceForm() {
+export function BalanceForm() {
   const {
     handleSubmit,
     register,
