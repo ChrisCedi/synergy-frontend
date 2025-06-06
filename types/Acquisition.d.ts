@@ -8,3 +8,12 @@ export type Acquisition = {
   remainingAmount: string;
   createdAt: string;
 };
+
+export type AcquisitionFormValues = {
+  name: string;
+  description: string;
+  cost: number;
+  paymentMethod: string;
+  initialPayment: number;
+  remainingAmount: string;
+};

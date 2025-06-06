@@ -13,12 +13,13 @@ import {
 } from "@/components/ui/select";
 import { useForm, Controller } from "react-hook-form";
 import { formatCurrency } from "@/utils/formatCurrency";
+import { AcquisitionFormValues } from "@/types/Acquisition";
 
 export type AcquisitionData = {
   name: string;
   description: string;
   cost: number;
-  paymentMethod: "contado" | "financiado";
+  paymentMethod: string;
   initialPayment: number;
   remainingAmount: string;
 };
@@ -26,9 +27,18 @@ export type AcquisitionData = {
 export function AcquisitionForm({
   companyData,
   cancelForm,
+  initialValues = {
+    name: "",
+    description: "",
+    cost: 0,
+    paymentMethod: "contado",
+    initialPayment: 0,
+    remainingAmount: "1",
+  },
 }: {
   companyData: { name: string; capital: number };
   cancelForm: () => void;
+  initialValues?: AcquisitionFormValues;
 }) {
   const {
     control,
@@ -37,14 +47,7 @@ export function AcquisitionForm({
     watch,
     handleSubmit,
   } = useForm<AcquisitionData>({
-    defaultValues: {
-      name: "",
-      description: "",
-      cost: 0,
-      paymentMethod: "contado",
-      initialPayment: 0,
-      remainingAmount: "1",
-    },
+    defaultValues: initialValues,
   });
 
   const onSubmit = (data: AcquisitionData) => {

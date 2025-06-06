@@ -4,6 +4,7 @@ import { formatCurrency } from "@/utils/formatCurrency";
 import { AddAcquisition } from "@/components/balances/organisms/AddAcquisition";
 import { ButtonBack } from "@/components/ui/atoms/ButtonBack";
 import { AcquisitionCard } from "@/components/balances/molecules/AcquisitionCard";
+import { Separator } from "@/components/ui/separator";
 
 export default async function AcquisitionsPage({
   params,
@@ -85,6 +86,7 @@ export default async function AcquisitionsPage({
               {data.map((acquisition) => (
                 <AcquisitionCard
                   key={acquisition.id}
+                  companyData={companyData}
                   acquisitionData={acquisition}
                 />
               ))}
@@ -97,6 +99,7 @@ export default async function AcquisitionsPage({
           ) : (
             <p>No hay adquisiciones registradas</p>
           )}
+          <Separator className="my-6" />
           <AddAcquisition companyData={companyData} />
         </CardContent>
       </Card>
