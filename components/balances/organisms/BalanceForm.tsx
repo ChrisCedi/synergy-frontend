@@ -3,51 +3,37 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useForm, Controller, useFieldArray } from "react-hook-form";
-import { Plus, Save } from "lucide-react";
-import BalanceCardForm from "../molecules/BalanceCardForm";
-import { Separator } from "@/components/ui/separator";
-import { toast } from "react-toastify";
-import { BalanceCardFormValues } from "../molecules/BalanceCardForm";
+import { useForm } from "react-hook-form";
+import { Save } from "lucide-react";
+import { useAlertDialogStore } from "@/stores/store-components/useAlertDialogStore";
+import { useRouter } from "next/navigation";
 import { formatCurrency } from "@/utils/formatCurrency";
 
 export type BalanceFormValues = {
   companyName: string;
   capital: number;
-  acquisitions: BalanceCardFormValues[];
 };
 
-export default function BalanceForm() {
+export function BalanceForm() {
   const {
     handleSubmit,
-    control,
     register,
-    watch,
     formState: { errors, isValid },
   } = useForm<BalanceFormValues>();
-
-  const { fields, append, remove } = useFieldArray({
-    control,
-    name: "acquisitions",
-  });
+  const showDialog = useAlertDialogStore((s) => s.show);
+  const router = useRouter();
 
   const onSubmit = (data: BalanceFormValues) => {
-    if (data.acquisitions.length === 0) {
-      toast.warning("Debe agregar al menos una adquisición");
-      return;
-    }
-    console.log("Form Data:", data);
+    showDialog({
+      title: "registro exitoso",
+      description: `Para completar el flujo es importante registrar adquisiciones. Puedes registrar adquisiciones en cualquier momento desde la tabla de Mis registros -> acciones -> administrar adquisiciones.`,
+      confirmText: "Registrar adquisiciones",
+
+      onConfirm: () => {
+        alert("Registrar adquisiciones");
+      },
+    });
   };
-
-  const capitalValue = !isNaN(Number(watch("capital"))) ? watch("capital") : 0;
-  const acquisitionsValue = watch("acquisitions") || [];
-
-  const totalAcquisitions = acquisitionsValue.reduce(
-    (total, acquisition) => total + (Number(acquisition.cost) || 0),
-    0
-  );
-
-  const balance = Number(capitalValue) - totalAcquisitions;
 
   return (
     <Card>
@@ -82,58 +68,8 @@ export default function BalanceForm() {
               )}
             </div>
           </div>
-          <div>
-            <h2 className="pt-4 pb-3 text-2xl font-bold">Adquisiciones</h2>
-            {fields.map((field, index) => (
-              <BalanceCardForm
-                key={field.id}
-                control={control}
-                register={register}
-                index={index}
-                remove={remove}
-                errors={errors}
-                watch={watch}
-              />
-            ))}
-            <Button
-              variant="outline"
-              className="w-full mt-10"
-              onClick={() =>
-                append({
-                  name: "",
-                  description: "",
-                  cost: 0,
-                  paymentMethod: "contado",
-                  initialPayment: 0,
-                  remainingAmount: "1",
-                })
-              }
-            >
-              <Plus />
-              Agregar adquisición
-            </Button>
-          </div>
 
-          <Separator className="my-8" />
-
-          <div className="bg-gray-100 p-6 rounded-2xl mb-6">
-            <h2 className="pb-3 text-2xl font-bold">Resumen</h2>
-            {isValid && acquisitionsValue.length > 0 ? (
-              <div>
-                <p>Capital: {formatCurrency(capitalValue)}</p>
-                <p>
-                  Total de adquisiciones: {formatCurrency(totalAcquisitions)}
-                </p>
-                <p>Balance: {formatCurrency(balance)}</p>
-              </div>
-            ) : (
-              <p>
-                Para visualizar el resumen de tu balance es importante llenar
-                los campos obligatorios y revisar que no existan errores.
-              </p>
-            )}
-          </div>
-          <div>
+          <div className="mt-8">
             <Button className="w-full mt-1" type="submit">
               <Save />
               Guardar Balance

@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/button";
+/* import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Trash } from "lucide-react";
@@ -29,15 +29,6 @@ type BalanceCardFormProps = {
   remove: (index: number) => void;
   errors: FieldErrors<BalanceFormValues>;
   watch: UseFormWatch<BalanceFormValues>;
-};
-
-export type BalanceCardFormValues = {
-  name: string;
-  description: string;
-  cost: number;
-  paymentMethod: "contado" | "financiado";
-  initialPayment: number;
-  remainingAmount: string;
 };
 
 export default function BalanceCardForm({
@@ -286,3 +277,4 @@ export default function BalanceCardForm({
     </Card>
   );
 }
+ */

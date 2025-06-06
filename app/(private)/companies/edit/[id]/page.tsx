@@ -1,11 +1,12 @@
-import ButtonBack from "@/components/ui/atoms/ButtonBack";
+import { ButtonBack } from "@/components/ui/atoms/ButtonBack";
 import { Title } from "@/components/ui/atoms/Title";
 import { CompanyForm } from "@/components/companies/organisms/CompanyForm";
+import { paramsType } from "@/types/Params";
 
 export default async function EditCompanyPage({
   params,
 }: {
-  params: { id: number };
+  params: paramsType;
 }) {
   const { id } = await params;
 
