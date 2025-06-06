@@ -9,7 +9,7 @@ import { Separator } from "@/components/ui/separator";
 export default async function AcquisitionsPage({
   params,
 }: {
-  params: { id: string };
+  params: { id: number };
 }) {
   const { id } = await params;
 
