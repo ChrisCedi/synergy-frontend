@@ -11,6 +11,7 @@ export function AddAcquisition({
   const [showForm, setShowForm] = useState(false);
   return (
     <div className="mt-4">
+      <h2 className="text-2xl font-semibold pb-6">Agregar adquisición</h2>
       {showForm ? (
         <div>
           <AcquisitionForm

@@ -24,10 +24,6 @@ const chartConfig = {
     label: "Desktop",
     color: "#60a5fa",
   },
-  mobile: {
-    label: "Mobile",
-    color: "#60a5fa",
-  },
 } satisfies ChartConfig;
 
 export function BalanceCharts() {

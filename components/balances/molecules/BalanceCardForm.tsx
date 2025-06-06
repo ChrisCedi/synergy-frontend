@@ -31,15 +31,6 @@ type BalanceCardFormProps = {
   watch: UseFormWatch<BalanceFormValues>;
 };
 
-export type BalanceCardFormValues = {
-  name: string;
-  description: string;
-  cost: number;
-  paymentMethod: "contado" | "financiado";
-  initialPayment: number;
-  remainingAmount: string;
-};
-
 export default function BalanceCardForm({
   control,
   register,
