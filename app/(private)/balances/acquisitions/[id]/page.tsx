@@ -30,6 +30,9 @@ export default async function AcquisitionsPage({
 
       <Card className="mt-6">
         <CardContent>
+          <h2 className="text-2xl font-semibold pb-6">
+            Lista de adquisiciones
+          </h2>
           {data.length > 0 ? (
             <p>Cards de cada adquisicion</p>
           ) : (

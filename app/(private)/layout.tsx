@@ -13,12 +13,11 @@ export default function PrivateLayout({
     <SidebarProvider>
       <SideBar />
       <section className="min-h-screen flex flex-col w-full bg-gray-50 dark:bg-gray-900">
+        <Header />
         <main>
-          <Header />
           <GlobalAlertDialog />
-          <div className="px-4 md:px-8 lg:px-14 pb-24 pt-10  h-full">
+          <div className="px-4 md:px-8 lg:px-14 pb-10 pt-10  h-full">
             {children}
-            <div className="pb-10" />
           </div>
           <ToastNotification />
         </main>
