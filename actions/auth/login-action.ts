@@ -1,46 +1,71 @@
 "use server";
-import { redirect } from "next/navigation";
-import { z } from "zod";
 
-export const loginAction = async (
-  previousState: {
-    success: string;
-    errors: string[];
-    values: {
-      email: string;
-      password: string;
+import { query } from "@/utils/query";
+import { cookies } from "next/headers";
+
+export const loginAction = async (body: {
+  email: string;
+  password: string;
+}) => {
+  const cookieStore = await cookies();
+  const response: {
+    status: string;
+    token: string;
+    data: {
+      id: number;
+      role: string;
     };
-  },
-  formData: FormData
-) => {
-  const email = String(formData.get("email") ?? "");
-  const password = String(formData.get("password") ?? "");
-
-  console.log(previousState.values);
-
-  const loginSchema = z.object({
-    email: z.string().email({ message: "Email no válido" }),
-    password: z.string().min(1, { message: "El Password no puede ir vacio" }),
+  } = await query("/auth/login", {
+    method: "POST",
+    body: {
+      email: body.email,
+      pass: body.password,
+    },
   });
 
-  const login = loginSchema.safeParse({ email, password });
-  if (!login.success) {
-    return {
-      success: "",
-      errors: login.error.issues.map((issue) => issue.message),
-      values: {
-        email,
-        password,
-      },
-    };
-  }
+  const permissions =
+    response.data.role == "financiero"
+      ? {
+          balances: {
+            see: true,
+            create: false,
+            edit: false,
+            generate: true,
+          },
+          companyCustomer: {
+            see: false,
+            create: true,
+            edit: true,
+          },
+        }
+      : response.data.role == "admin"
+      ? {
+          balances: {
+            see: false,
+            create: false,
+            edit: false,
+            generate: false,
+          },
+          companyCustomer: {
+            see: true,
+            create: true,
+            edit: true,
+          },
+        }
+      : {
+          balances: {
+            see: true,
+            create: true,
+            edit: true,
+            generate: false,
+          },
+          companyCustomer: {
+            see: false,
+            create: true,
+            edit: true,
+          },
+        };
 
-  return {
-    success: "Login exitoso",
-    errors: [],
-    values: {
-      email: "",
-      password: "",
-    },
-  };
+  cookieStore.set("token", response.token);
+  cookieStore.set("permissions", JSON.stringify(permissions));
 };

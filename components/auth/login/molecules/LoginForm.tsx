@@ -1,63 +1,74 @@
 "use client";
-import { useActionState, useEffect } from "react";
+
+import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { loginAction } from "@/actions/auth/login-action";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 
+type FormData = {
+  email: string;
+  password: string;
+};
+
 export default function LoginForm() {
   const router = useRouter();
-  const [state, formAction, pending] = useActionState(loginAction, {
-    success: "",
-    errors: [],
-    values: {
-      email: "",
-      password: "",
-    },
-  });
 
-  useEffect(() => {
-    if (state.errors) {
-      state.errors.forEach((error) => {
-        toast.error(error);
-      });
-    }
-  }, [state.errors]);
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting },
+  } = useForm<FormData>();
 
-  useEffect(() => {
-    if (state.success) {
-      toast.success(state.success);
-      setTimeout(() => {
-        router.push("/balances");
-      }, 500);
+  async function onSubmit(data: FormData) {
+    try {
+      await loginAction(data);
+      toast.success("Inicio de sesión exitoso");
+      //router.push("/dashboard"); // o la ruta a donde quieras redirigir
+    } catch (error: any) {
+      toast.error(error?.message || "Error al iniciar sesión");
     }
-  }, [state.success]);
+  }
 
   return (
-    <form action={formAction} className="space-y-6">
+    <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
       <div>
         <Input
           id="email"
           placeholder="Correo Electrónico"
-          name="email"
-          defaultValue={state.values.email}
+          {...register("email", {
+            required: "El correo es obligatorio",
+            pattern: {
+              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+              message: "Correo inválido",
+            },
+          })}
+          aria-invalid={errors.email ? "true" : "false"}
         />
+        {errors.email && (
+          <p className="text-red-600 text-sm mt-1">{errors.email.message}</p>
+        )}
       </div>
 
       <div>
         <Input
           id="password"
           placeholder="Contraseña"
-          name="password"
           type="password"
-          defaultValue={state.values.password}
+          {...register("password", {
+            required: "La contraseña es obligatoria",
+          })}
+          aria-invalid={errors.password ? "true" : "false"}
         />
+        {errors.password && (
+          <p className="text-red-600 text-sm mt-1">{errors.password.message}</p>
+        )}
       </div>
 
       <div className="mt-12">
-        <Button className="w-full" disabled={pending}>
-          Iniciar sesión
+        <Button className="w-full" type="submit" disabled={isSubmitting}>
+          {isSubmitting ? "Cargando..." : "Iniciar sesión"}
         </Button>
       </div>
     </form>
