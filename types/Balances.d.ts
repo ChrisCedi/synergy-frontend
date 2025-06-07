@@ -19,6 +19,14 @@ export interface Balance {
   acquisitions: Acquisition[];
 }
 
+export interface BalanceById {
+  id: number;
+  companyName: string;
+  capital: number;
+  createdAt: string; // ISO 8601 format
+  companyCustomerId: number;
+}
+
 export interface BalanceResponse {
   status: string;
   messsge: string; // (nota: parece que hay un typo en "message")

@@ -17,3 +17,9 @@ export type AcquisitionFormValues = {
   initialPayment: number;
   remainingAmount: string;
 };
+
+export interface AcquisitionsResponse {
+  status: string;
+  message: string;
+  data: Acquisition[];
+}
