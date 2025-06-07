@@ -26,7 +26,7 @@ const UserAvatar: React.FC = () => {
         >
           <Avatar className="h-8 w-8 border border-border">
             <AvatarFallback className="bg-blue-50 text-blue-600">
-              JD
+              S
             </AvatarFallback>
           </Avatar>
         </Button>

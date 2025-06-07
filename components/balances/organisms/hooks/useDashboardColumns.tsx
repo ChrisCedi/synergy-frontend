@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
 
-export type Balance = {
+export type BalanceItem = {
   id: string;
   company: string;
   createdAt: string;
@@ -21,15 +21,12 @@ export type Balance = {
 export const useDashboardColumns = () => {
   const router = useRouter();
 
-  const dashboardColumns: ColumnDef<Balance>[] = [
+  const dashboardColumns: ColumnDef<BalanceItem>[] = [
     {
-      accessorKey: "company",
+      accessorKey: "companyName",
       header: "Empresa",
     },
-    {
-      accessorKey: "employee",
-      header: "Emplaeado",
-    },
+
     {
       accessorKey: "createdAt",
       header: "Fecha de registro",
