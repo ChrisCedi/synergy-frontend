@@ -24,3 +24,14 @@ export interface BalanceResponse {
   messsge: string; // (nota: parece que hay un typo en "message")
   data: Balance[];
 }
+
+export interface CreateBalanceResponse {
+  status: string;
+  data: {
+    id: number;
+    companyName: string;
+    capital: number;
+    companyCustomerId: number;
+    createdAt: string; // o Date si lo parseas luego
+  };
+}

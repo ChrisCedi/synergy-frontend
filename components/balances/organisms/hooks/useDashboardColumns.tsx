@@ -13,8 +13,8 @@ import {
 import { useRouter } from "next/navigation";
 
 export type BalanceItem = {
-  id: string;
-  company: string;
+  id: number;
+  companyName: string;
   createdAt: string;
 };
 

@@ -19,7 +19,7 @@ export default async function PrivateLayout({
         id: null,
         name: "",
         role: "",
-        company: "",
+        companyCustomerId: "",
       };
 
   return (

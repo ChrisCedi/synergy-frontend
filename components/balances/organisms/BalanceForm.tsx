@@ -7,7 +7,8 @@ import { useForm } from "react-hook-form";
 import { Save } from "lucide-react";
 import { useAlertDialogStore } from "@/stores/store-components/useAlertDialogStore";
 import { useRouter } from "next/navigation";
-import { formatCurrency } from "@/utils/formatCurrency";
+import { createBalanceAction } from "@/actions/balances/create-balance-action";
+import { toast } from "react-toastify";
 
 export type BalanceFormValues = {
   companyName: string;
@@ -23,16 +24,21 @@ export function BalanceForm() {
   const showDialog = useAlertDialogStore((s) => s.show);
   const router = useRouter();
 
-  const onSubmit = (data: BalanceFormValues) => {
-    showDialog({
-      title: "registro exitoso",
-      description: `Para completar el flujo es importante registrar adquisiciones. Puedes registrar adquisiciones en cualquier momento desde la tabla de Mis registros -> acciones -> administrar adquisiciones.`,
-      confirmText: "Registrar adquisiciones",
+  const onSubmit = async (data: BalanceFormValues) => {
+    try {
+      const response = await createBalanceAction(data);
+      showDialog({
+        title: "registro exitoso",
+        description: `Para completar el flujo es importante registrar adquisiciones. Puedes registrar adquisiciones en cualquier momento desde la tabla de Mis registros -> acciones -> administrar adquisiciones.`,
+        confirmText: "Registrar adquisiciones",
 
-      onConfirm: () => {
-        alert("Registrar adquisiciones");
-      },
-    });
+        onConfirm: () => {
+          router.push(`/balances/acquisitions/${response.data.id}`);
+        },
+      });
+    } catch (error: any) {
+      toast.error(error?.message || "Error al iniciar sesión");
+    }
   };
 
   return (
