@@ -23,3 +23,13 @@ export interface AcquisitionsResponse {
   message: string;
   data: Acquisition[];
 }
+
+export interface CreateAcquisitionDto {
+  name: string;
+  description: string;
+  cost: number;
+  paymentMethod: string;
+  initialPayment: number;
+  remainingAmount: string;
+  balanceId: number;
+}

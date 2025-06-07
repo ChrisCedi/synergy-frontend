@@ -54,7 +54,7 @@ export default async function AcquisitionsPage({
     }
   };
   const { user } = await getSessionData();
-  await getBalanceById(+user.companyCustomerId);
+  await getBalanceById(id);
   await getBalancesAcquisitions();
 
   const total = acquisitionList.reduce((total: number, acquisition) => {
@@ -96,7 +96,7 @@ export default async function AcquisitionsPage({
             <p>No hay adquisiciones registradas</p>
           )}
           <Separator className="my-6" />
-          <AddAcquisition companyData={balanceData} />
+          <AddAcquisition companyData={balanceData} balanceId={id} />
         </CardContent>
       </Card>
     </div>
