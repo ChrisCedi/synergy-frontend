@@ -6,18 +6,17 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { toast } from "react-toastify";
+import { createCompanyAction } from "@/actions/company-customer/create-company-action";
 
 interface CompanyForm {
   companyName: string;
   rfc: string;
-  email: string;
 }
 
 export function CompanyForm({
   initialValues = {
     companyName: "",
     rfc: "",
-    email: "",
   },
 }) {
   const router = useRouter();
@@ -29,10 +28,14 @@ export function CompanyForm({
     defaultValues: initialValues,
   });
 
-  const onSubmit = (data: CompanyForm) => {
-    console.log(data);
-    toast.success("Cliente guardado correctamente");
-    router.back();
+  const onSubmit = async (data: CompanyForm) => {
+    try {
+      await createCompanyAction(data);
+      toast.success("Cliente guardado correctamente");
+      router.back();
+    } catch (error) {
+      toast.error("El cliente ya existe");
+    }
   };
 
   return (
@@ -62,22 +65,7 @@ export function CompanyForm({
                 <p className="text-red-500 text-xs">{errors.rfc.message}</p>
               )}
             </div>
-            <div>
-              <Label>Email de la empresa</Label>
-              <Input
-                placeholder="Ej: empresa@correo.com"
-                {...register("email", {
-                  required: "Campo requerido",
-                  pattern: {
-                    value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-                    message: "Formato de email inválido",
-                  },
-                })}
-              />
-              {errors.email && (
-                <p className="text-red-500 text-xs">{errors.email.message}</p>
-              )}
-            </div>
+
             <div>
               <Button type="submit">Guardar</Button>
             </div>
