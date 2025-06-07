@@ -1,8 +1,12 @@
 "use client";
 import { DataTable } from "@/components/ui/organisms/DataTable";
-import { Balance, useDashboardColumns } from "./hooks/useDashboardColumns";
+import { BalanceItem, useDashboardColumns } from "./hooks/useDashboardColumns";
 
-export default function BalancesTable({ data = [] }: { data: Balance[] }) {
+export default function BalanceItemsTable({
+  data = [],
+}: {
+  data: BalanceItem[];
+}) {
   const { dashboardColumns } = useDashboardColumns();
 
   return (
@@ -10,7 +14,7 @@ export default function BalancesTable({ data = [] }: { data: Balance[] }) {
       <DataTable
         columns={dashboardColumns}
         data={data}
-        searchBy="company"
+        searchBy="companyName"
         label="Filtrar por empresa"
       />
     </div>

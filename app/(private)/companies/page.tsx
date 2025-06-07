@@ -2,34 +2,20 @@ import { Title } from "@/components/ui/atoms/Title";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { CompanyCard } from "@/components/companies/molecules/CompanyCard";
+import { query } from "@/utils/query";
+import { CompanyCustomerDto } from "@/types/Company";
 
-export default function UsersPage() {
-  const companies = [
-    {
-      id: 1,
-      name: "Coca Cola",
-      rfc: "XXXX1100201XX011",
-      email: "coca@correo.com",
-    },
-    {
-      id: 2,
-      name: "Pepsi Prueba Espacios",
-      rfc: "XXXX1100201XX011",
-      email: "pepsi@correo.com",
-    },
-    {
-      id: 4,
-      name: "Pepsi",
-      rfc: "XXXX1100201XX011",
-      email: "pepsi@correo.com",
-    },
-    {
-      id: 42,
-      name: "Pepsi",
-      rfc: "XXXX1100201XX011",
-      email: "pepsi@correo.com",
-    },
-  ];
+export default async function UsersPage() {
+  let companies: CompanyCustomerDto[] = [];
+  const getAllCompanies = async () => {
+    try {
+      companies = await query("/company-customers", { method: "GET" });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  await getAllCompanies();
 
   return (
     <div>
@@ -42,9 +28,8 @@ export default function UsersPage() {
           <CompanyCard
             key={company.id}
             id={company.id}
-            name={company.name}
+            name={company.companyName}
             rfc={company.rfc}
-            email={company.email}
           />
         ))}
         {companies.length === 0 && (

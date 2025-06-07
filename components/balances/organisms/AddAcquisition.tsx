@@ -5,8 +5,10 @@ import { AcquisitionForm } from "./AcquisitionForm";
 
 export function AddAcquisition({
   companyData,
+  balanceId,
 }: {
   companyData: { name: string; capital: number };
+  balanceId: number;
 }) {
   const [showForm, setShowForm] = useState(false);
   return (
@@ -15,6 +17,7 @@ export function AddAcquisition({
       {showForm ? (
         <div>
           <AcquisitionForm
+            balanceId={balanceId}
             companyData={companyData}
             cancelForm={() => setShowForm(false)}
           />

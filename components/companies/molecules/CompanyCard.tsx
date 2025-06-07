@@ -16,10 +16,9 @@ interface CompanyCardProps {
   id: number;
   name: string;
   rfc: string;
-  email: string;
 }
 
-export function CompanyCard({ id, name, rfc, email }: CompanyCardProps) {
+export function CompanyCard({ id, name, rfc }: CompanyCardProps) {
   const router = useRouter();
   return (
     <Card>
@@ -34,13 +33,12 @@ export function CompanyCard({ id, name, rfc, email }: CompanyCardProps) {
       <CardContent>
         <div className="flex flex-col">
           <p className="text-sm text-gray-500">RFC: {rfc}</p>
-          <p className="text-sm text-gray-500">Email: {email}</p>
         </div>
       </CardContent>
       <CardFooter className="flex flex-col gap-2">
         <Button
           className="w-full"
-          onClick={() => router.push(`/companies/users/create/${name}`)}
+          onClick={() => router.push(`/companies/users/create/${id}`)}
         >
           Registrar usuario
         </Button>

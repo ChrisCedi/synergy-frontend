@@ -14,6 +14,8 @@ import {
 import { useForm, Controller } from "react-hook-form";
 import { formatCurrency } from "@/utils/formatCurrency";
 import { AcquisitionFormValues } from "@/types/Acquisition";
+import { createAcquisitionAction } from "@/actions/balances/create-acquisition-action";
+import { toast } from "react-toastify";
 
 export type AcquisitionData = {
   name: string;
@@ -25,6 +27,7 @@ export type AcquisitionData = {
 };
 
 export function AcquisitionForm({
+  balanceId,
   companyData,
   cancelForm,
   initialValues = {
@@ -36,6 +39,7 @@ export function AcquisitionForm({
     remainingAmount: "1",
   },
 }: {
+  balanceId: number;
   companyData: { name: string; capital: number };
   cancelForm: () => void;
   initialValues?: AcquisitionFormValues;
@@ -50,8 +54,14 @@ export function AcquisitionForm({
     defaultValues: initialValues,
   });
 
-  const onSubmit = (data: AcquisitionData) => {
-    console.log("Datos de adquisición:", data);
+  const onSubmit = async (data: AcquisitionData) => {
+    try {
+      await createAcquisitionAction({ ...data, balanceId: +balanceId });
+      toast.success("Adquisición creada con exito");
+      cancelForm();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   //let companyData.capital = Number(watch("capital"));
