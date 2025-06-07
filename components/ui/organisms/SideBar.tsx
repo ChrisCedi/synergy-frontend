@@ -28,7 +28,6 @@ export function SideBar({
     id: number;
     name: string;
     role: string;
-    company: string;
   };
 }) {
   const pathname = usePathname();
@@ -63,7 +62,7 @@ export function SideBar({
           />
           <TypographyH3 className="pl-2">Synergy</TypographyH3>
         </div>
-        <p>Bienvenido, usuario</p>
+        <p>Bienvenido, {user.name}</p>
       </SidebarHeader>
       <SidebarContent className="bg-white">
         <SidebarGroup>

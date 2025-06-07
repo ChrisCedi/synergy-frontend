@@ -1,4 +1,4 @@
-import React from "react";
+"use client";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { User, Settings } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { logOutAction } from "@/actions/auth/logout-action";
 
 const UserAvatar: React.FC = () => {
   const router = useRouter();
@@ -42,7 +43,12 @@ const UserAvatar: React.FC = () => {
           <span>Settings</span>
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => router.replace("/auth/login")}>
+        <DropdownMenuItem
+          onClick={() => {
+            logOutAction();
+            router.replace("/auth/login");
+          }}
+        >
           Cerrar sesión
         </DropdownMenuItem>
       </DropdownMenuContent>
