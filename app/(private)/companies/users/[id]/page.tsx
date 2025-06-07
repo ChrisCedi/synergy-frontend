@@ -5,8 +5,35 @@ import {
   User,
   usersColumns,
 } from "@/components/companies/organisms/usersColumns";
+import { query } from "@/utils/query";
+import { UsersResponse } from "@/types/User";
 
-export default function UsersCompanyPage() {
+type paramsCompany = Promise<{ id: string }>;
+
+export default async function UsersCompanyPage({
+  params,
+}: {
+  params: paramsCompany;
+}) {
+  const { id } = await params;
+  let userList: User[] = [];
+
+  const getUsers = async () => {
+    try {
+      const response: User[] = await query(`/users/byCompany/${id}`, {
+        method: "GET",
+      });
+
+      if (response) {
+        userList = response;
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  await getUsers();
+
   const data: User[] = [
     {
       name: "Juan",
@@ -20,11 +47,11 @@ export default function UsersCompanyPage() {
   ];
   return (
     <div>
-      <Title title={`Usuarios - `} />
+      <Title title={`Usuarios -  ${id}`} />
       <ButtonBack />
       <DataTable
         columns={usersColumns}
-        data={data}
+        data={userList}
         label="Buscar por nombre"
         searchBy="name"
       />
