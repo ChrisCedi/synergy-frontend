@@ -55,7 +55,20 @@ export const useDashboardColumns = () => {
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem
-                onClick={() => alert("Exportar reporte de balance")}
+               // onClick={() => alert("Exportar reporte de balance")}
+               onClick={async () => {
+                const res = await fetch(`/api/balances/${balance.id}/reporte`);                ;
+                if (!res.ok) throw new Error("Error al generar el reporte");
+                const blob = await res.blob();
+                // Link de descarga
+                const url = window.URL.createObjectURL(blob);
+                const link = document.createElement("a");
+                link.href = url;
+                link.download = `balance_${balance.id}.pdf`;
+                document.body.appendChild(link);
+                link.click();
+                link.remove();
+              }}
               >
                 Exportar reporte de balance
               </DropdownMenuItem>
