@@ -68,4 +68,5 @@ export const loginAction = async (body: {
 
   cookieStore.set("token", response.token);
   cookieStore.set("permissions", JSON.stringify(permissions));
+  cookieStore.set("user", JSON.stringify(response.data));
 };

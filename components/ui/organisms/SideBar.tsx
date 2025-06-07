@@ -1,5 +1,5 @@
 "use client";
-import { Home, User, FactoryIcon } from "lucide-react";
+import { Home, FactoryIcon } from "lucide-react";
 import {
   Sidebar,
   SidebarContent,
@@ -15,21 +15,42 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 
-const items = [
-  {
-    title: "Balances",
-    url: "/balances",
-    icon: Home,
-  },
-  {
-    title: "Empresas",
-    url: "/companies",
-    icon: FactoryIcon,
-  },
-];
+type RouteItem = {
+  title: string;
+  url: string;
+  icon: React.ElementType;
+};
 
-export function SideBar() {
+export function SideBar({
+  user,
+}: {
+  user: {
+    id: number;
+    name: string;
+    role: string;
+    company: string;
+  };
+}) {
   const pathname = usePathname();
+
+  const userRoutes: RouteItem[] = [
+    {
+      title: "Balances",
+      url: "/balances",
+      icon: Home,
+    },
+  ];
+
+  const adminRoutes: RouteItem[] = [
+    {
+      title: "Empresas",
+      url: "/companies",
+      icon: FactoryIcon,
+    },
+  ];
+
+  const routesToRender = user.role === "admin" ? adminRoutes : userRoutes;
+
   return (
     <Sidebar className="p-4 bg-white">
       <SidebarHeader className="bg-white">
@@ -48,7 +69,7 @@ export function SideBar() {
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => (
+              {routesToRender.map((item) => (
                 <SidebarMenuItem
                   key={item.title}
                   className={`${
