@@ -81,6 +81,7 @@ export default async function AcquisitionsPage({
             <div>
               {acquisitionList.map((acquisition) => (
                 <AcquisitionCard
+                  balanceId={id}
                   key={acquisition.id}
                   companyData={balanceData}
                   acquisitionData={acquisition}

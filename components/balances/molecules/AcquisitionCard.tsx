@@ -13,9 +13,11 @@ import { useAlertDialogStore } from "@/stores/store-components/useAlertDialogSto
 export function AcquisitionCard({
   companyData,
   acquisitionData,
+  balanceId,
 }: {
   companyData: Company;
   acquisitionData: Acquisition;
+  balanceId: number;
 }) {
   const [editAcquisition, setEditAcquisition] = useState(false);
   const showDialog = useAlertDialogStore((s) => s.show);
@@ -48,6 +50,7 @@ export function AcquisitionCard({
           </p>
 
           <AcquisitionForm
+            balanceId={balanceId}
             companyData={companyData}
             initialValues={acquisitionData}
             cancelForm={() => setEditAcquisition(false)}
