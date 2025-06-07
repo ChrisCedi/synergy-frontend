@@ -38,7 +38,7 @@ export function CompanyCard({ id, name, rfc }: CompanyCardProps) {
       <CardFooter className="flex flex-col gap-2">
         <Button
           className="w-full"
-          onClick={() => router.push(`/companies/users/create/${name}`)}
+          onClick={() => router.push(`/companies/users/create/${id}`)}
         >
           Registrar usuario
         </Button>

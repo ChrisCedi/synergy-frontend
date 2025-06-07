@@ -12,24 +12,39 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { toast } from "react-toastify";
+import { createUserAction } from "@/actions/company-customer/create-user-action";
+import { useRouter } from "next/navigation";
 
 interface UserFormValues {
   name: string;
   lastName: string;
   email: string;
   role: string;
+  password: string;
 }
 
-export function UserForm() {
+export function UserForm({ companyCustomerId }: { companyCustomerId: number }) {
   const {
     register,
     handleSubmit,
     control,
     formState: { errors },
   } = useForm<UserFormValues>();
+  const router = useRouter();
 
-  const onSubmit = (data: UserFormValues) => {
-    console.log("Formulario enviado:", data);
+  const onSubmit = async (data: UserFormValues) => {
+    try {
+      const response = await createUserAction({
+        ...data,
+        companyCustomerId: +companyCustomerId,
+      });
+
+      toast.success("Usuario registrado");
+      router.back();
+    } catch (error) {
+      toast.error("Error desconocido");
+    }
   };
 
   return (
@@ -105,6 +120,20 @@ export function UserForm() {
               />
               {errors.role && (
                 <p className="text-sm text-red-500">{errors.role.message}</p>
+              )}
+            </div>
+            <div>
+              <Label htmlFor="lastName">Contraseña</Label>
+              <Input
+                id="password"
+                {...register("password", {
+                  required: "El apellido es obligatorio",
+                })}
+              />
+              {errors.password && (
+                <p className="text-sm text-red-500">
+                  {errors.password.message}
+                </p>
               )}
             </div>
           </div>

@@ -11,12 +11,12 @@ export default async function CreateUserPage({
   params: paramsCompany;
 }) {
   const { company_name } = await params;
-  const nameFormatted = company_name.split("%20").join(" ");
+
   return (
     <div>
-      <Title title={`Registrar nuevo usuario - ${nameFormatted}`} />
+      <Title title={`Registrar nuevo usuario - ${company_name}`} />
       <ButtonBack />
-      <UserForm />
+      <UserForm companyCustomerId={+company_name} />
     </div>
   );
 }
