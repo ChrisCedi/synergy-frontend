@@ -15,6 +15,7 @@ export const createAcquisitionAction = async (body: CreateAcquisitionDto) => {
   });
 
   revalidatePath("/balances/acquisitions/:id");
+  revalidatePath("/balances");
 
   return response;
 };

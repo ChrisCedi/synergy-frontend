@@ -20,15 +20,26 @@ export default async function BalancesPage() {
   const userCookie = cookieStore.get("user")?.value;
   const user = userCookie ? JSON.parse(userCookie) : {};
   let balanceList: Balance[] = [];
+  let balanceCharts: { company: string; total: number }[] = [];
 
   try {
     const response = await query<BalanceResponse>(
       `/balances/findByCompany/${user.companyCustomerId}`,
-      { method: "GET" }
+      { method: "GET" },
     );
 
+    console.log("balances", response);
     if (response.data) {
       balanceList = response.data;
+      balanceCharts = response.data.map((balance) => {
+        return {
+          company: balance.companyName,
+          total: balance.acquisitions.reduce(
+            (sum, adq) => sum + (Number(adq.cost) || 0),
+            0,
+          ),
+        };
+      });
     }
   } catch (error) {
     toast.error("Error al obtener los registro");
@@ -38,7 +49,7 @@ export default async function BalancesPage() {
     <div>
       <Title title="Balances" />
       <CreateBalanceButton />
-      <BalanceCharts />
+      <BalanceCharts balanceCharts={balanceCharts} />
       <TypographyH4 className="py-4">Mis registros</TypographyH4>
       <BalancesTable data={balanceList} />
     </div>

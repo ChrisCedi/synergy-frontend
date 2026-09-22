@@ -17,7 +17,7 @@ export const createCompanyAction = async (body: {
     body,
   });
 
-  // revalidatePath("/balances/acquisitions/:id");
+  revalidatePath("/balances/acquisitions/:id");
 
   return response;
 };

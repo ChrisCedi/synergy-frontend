@@ -11,12 +11,12 @@ import {
 import { TypographyH4 } from "@/components/ui/atoms/TypographyH4";
 
 const chartData = [
-  { company: "Coca cola", adquisiciones: 186 },
-  { company: "Pepsi", adquisiciones: 305 },
-  { company: "Barcel", adquisiciones: 237 },
-  { company: "Bimbo", adquisiciones: 73 },
-  { company: "Sabritas", adquisiciones: 209 },
-  { company: "Jumex", adquisiciones: 21 },
+  { company: "Coca cola", total: 186 },
+  { company: "Pepsi", total: 305 },
+  { company: "Barcel", total: 237 },
+  { company: "Bimbo", total: 73 },
+  { company: "Sabritas", total: 209 },
+  { company: "Jumex", total: 21 },
 ];
 
 const chartConfig = {
@@ -26,17 +26,19 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-export function BalanceCharts() {
+export function BalanceCharts({
+  balanceCharts,
+}: {
+  balanceCharts: { company: string; total: number }[];
+}) {
   return (
     <div>
-      <TypographyH4 className="py-4">
-        Top de adquisiciones por empresa
-      </TypographyH4>
+      <TypographyH4 className="py-4">Top de egresos por empresa</TypographyH4>
       <ChartContainer
         config={chartConfig}
         className="h-[200px] md:h-[240px] w-full mb-4"
       >
-        <BarChart accessibilityLayer data={chartData}>
+        <BarChart accessibilityLayer data={balanceCharts}>
           <CartesianGrid vertical={false} />
           <XAxis
             dataKey="company"
@@ -47,7 +49,7 @@ export function BalanceCharts() {
           />
           <YAxis />
           <ChartTooltip content={<ChartTooltipContent />} />
-          <Bar dataKey="adquisiciones" fill="var(--color-desktop)" radius={4} />
+          <Bar dataKey="total" fill="var(--color-desktop)" radius={4} />
         </BarChart>
       </ChartContainer>
     </div>
