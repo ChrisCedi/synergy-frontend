@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { useRouter } from "next/navigation";
+import { deleteBalanceAction } from "@/actions/balances/delete-balance-action";
 
 export type BalanceItem = {
   id: number;
@@ -74,7 +75,11 @@ export const useDashboardColumns = () => {
               </DropdownMenuItem>
               <DropdownMenuSeparator />
 
-              <DropdownMenuItem>Eliminar</DropdownMenuItem>
+              <DropdownMenuItem
+                onClick={async () => await deleteBalanceAction(`${balance.id}`)}
+              >
+                Eliminar
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         );

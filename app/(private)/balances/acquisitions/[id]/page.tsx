@@ -27,7 +27,7 @@ export default async function AcquisitionsPage({
         `/acquisitions/byBalance/${id}`,
         {
           method: "GET",
-        }
+        },
       );
 
       acquisitionList = response.data;

@@ -39,34 +39,36 @@ export const loginAction = async (body: {
           },
         }
       : response.data.role == "admin"
-      ? {
-          balances: {
-            see: false,
-            create: false,
-            edit: false,
-            generate: false,
-          },
-          companyCustomer: {
-            see: true,
-            create: true,
-            edit: true,
-          },
-        }
-      : {
-          balances: {
-            see: true,
-            create: true,
-            edit: true,
-            generate: false,
-          },
-          companyCustomer: {
-            see: false,
-            create: true,
-            edit: true,
-          },
-        };
+        ? {
+            balances: {
+              see: false,
+              create: false,
+              edit: false,
+              generate: false,
+            },
+            companyCustomer: {
+              see: true,
+              create: true,
+              edit: true,
+            },
+          }
+        : {
+            balances: {
+              see: true,
+              create: true,
+              edit: true,
+              generate: false,
+            },
+            companyCustomer: {
+              see: false,
+              create: true,
+              edit: true,
+            },
+          };
 
   cookieStore.set("token", response.token);
   cookieStore.set("permissions", JSON.stringify(permissions));
   cookieStore.set("user", JSON.stringify(response.data));
+
+  return response;
 };
